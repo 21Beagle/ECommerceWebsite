@@ -4,7 +4,7 @@ import "./SignUp.css"
 function SignUp() {
   return (
     <div className="signUp center">
-      <form action="action_page.php">
+      <form action="/signup" method="POST">
 
       <div class="vcontainer">
         <h1 id="signUpBright">Register</h1>
@@ -18,7 +18,7 @@ function SignUp() {
 
         <div className="hcontainer ">
           <label for="psw" className="item" id="signUpDark"><b>Password:</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" id="psw" required />
+          <input type="password" placeholder="Enter Password" name="password" id="passwword" required />
         </div>
           <button type="submit" class="registerbtn" id="signUpButton">Register </button>  
       </div>

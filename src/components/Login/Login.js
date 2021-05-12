@@ -4,7 +4,7 @@ import "./Login.css"
 function Login() {
   return (
     <div className="logIn center">
-      <form action="action_page.php">
+      <form action="/login" method="POST">
 
       <div class="vcontainer">
         <h1>Log in</h1>
@@ -18,7 +18,7 @@ function Login() {
 
         <div className="hcontainer ">
           <label for="psw" className="item"><b>Password:</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" id="psw" required />
+          <input type="password" placeholder="Enter Password" name="password" id="password" required />
         </div>
           <button type="submit" class="registerbtn">Login </button>  
       </div>

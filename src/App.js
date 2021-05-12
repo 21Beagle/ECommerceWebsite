@@ -5,7 +5,6 @@ import {
   Route,
   Link,
   useRouteMatch,
-  useParams
 } from "react-router-dom";
 import SignUp from "./components/SignUp/SignUp"
 import Login from "./components/Login/Login"
@@ -87,7 +86,3 @@ function Products() {
   );
 }
 
-function Topic() {
-  let { topicId } = useParams();
-  return <h3>Requested topic ID: {topicId}</h3>;
-}

@@ -1,11 +1,9 @@
 h1 {
-    color: var(--prim2);
     display: flex;
     justify-content: center;
 }
 
 p {
-    color: var(--prim2);
     display: flex;
     justify-content: center;
 }
@@ -73,7 +71,7 @@ label {
 }
 
 #signUpBright{
-    color: var(--prim1)
+    color: var(--prim2)
 }
 
 #signUpButton {
