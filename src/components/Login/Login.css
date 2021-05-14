@@ -2,6 +2,7 @@ h1 {
     color: var(--sec2);
     display: flex;
     justify-content: center;
+    font-family: 'Fredoka One', cursive;
 }
 
 p {

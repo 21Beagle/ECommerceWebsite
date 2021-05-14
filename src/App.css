@@ -14,6 +14,10 @@ html {
 
 }
 
+h1 {
+  font-family: 'Fredoka One', cursive;
+}
+
 
 
 .center {
@@ -28,12 +32,13 @@ html {
 
 /* unvisited link */
 a:link {
-  color: var(--sec1);
+  color: white;
+  text-decoration: none;
 }
 
 /* visited link */
 a:visited {
-  color: var(--sec2);
+  color: white;
 }
 
 /* mouse over link */

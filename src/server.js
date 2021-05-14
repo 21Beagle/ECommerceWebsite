@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bcrypt = require('bcrypt')
+var cors = require('cors')
 const { Client } = require('pg');
 const db = require('./db');
 
@@ -8,6 +9,7 @@ const db = require('./db');
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.json())
+app.use(cors())
 
 
 const client = new Client({
@@ -30,8 +32,15 @@ app.post('/signup', async (req, res) => {
     try { 
         const userEmail = req.body.email
         const hashedPassword = await bcrypt.hash(req.body.password,10)
-        createUser(userEmail, hashedPassword)
-        res.redirect('/login')
+        const user = await findUserByEmail(userEmail)
+        if (user === undefined) {
+          createUser(userEmail, hashedPassword)
+          res.redirect('/login')
+        } else {
+          console.log("UserAlready has an account")
+          res.redirect('/login')
+        }
+        
     } catch {
         res.redirect('/register')
     }
@@ -57,6 +66,14 @@ app.post('/login', async (req,res) => {
     }
 })
 
+app.get('/products', async (req,res) => {
+  try {
+  const products = await getProductItems()
+  res.json(products)
+  } catch {
+      res.redirect('/')
+  }
+})
 
 
 app.listen(PORT = 3001, ()=> {
@@ -72,6 +89,13 @@ const createUser = async (userEmail, hashedPassword) => {
 
 }
 
+const findUserByEmail = async (userEmail) => {
+  results = await client.query(` 
+  SELECT (email) FROM users
+  WHERE email = '{${userEmail}}';`)
+  return results.rows[0]
+}
+
 const getUserHashedPassword = async (userEmail) => {
     console.log(userEmail)
     results = await client.query(`
@@ -81,3 +105,7 @@ const getUserHashedPassword = async (userEmail) => {
     return results.rows[0].password[0]
 }
 
+const getProductItems = async () => {
+  results = await client.query(`SELECT * FROM items ORDER BY id ASC;`)
+  return results.rows
+}
