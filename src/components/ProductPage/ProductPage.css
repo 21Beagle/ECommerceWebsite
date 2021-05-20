@@ -1,0 +1,54 @@
+img {
+    width: 80%;
+    display: block;
+}
+
+.split {
+    width: 50%;
+}
+
+.pageContainer {
+    display: flex;
+    width: 65%;
+}
+
+.hContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+}
+
+.vContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: stretch;
+}
+
+.productPageTitle {
+    color: var(--sec1);
+}
+
+.productPageDesc {
+    color: var(--prim1);
+    width: 65%;
+    text-align: center;
+}
+
+.productPagePrice {
+    color: var(--prim2)
+}
+
+.addToCart {
+    width: 33%;
+    justify-content: space-around;
+}
+
+.cartButton {
+    width: auto;
+    
+}
