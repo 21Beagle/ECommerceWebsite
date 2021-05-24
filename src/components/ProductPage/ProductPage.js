@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import './ProductPage.css'
 import { useRouteMatch } from "react-router-dom";
 import square from '../../media/images/square.jpg'
+import Cookies from 'js-cookie';
 
 
 
@@ -31,7 +32,12 @@ function ProductPage() {
                     <p className="productPageDesc">{product.description}</p>
                     <p className="productPagePrice">Price: {product.price} </p>
                     <div className="addToCart hContainer">
-                        <p>Add to cart  </p> <button type="submit" className="cartButton" id="signUpButton">Add</button> 
+                        <p>Add to cart  </p> 
+                        <form action={`/cart/${product.id}`} method="POST">
+                            <input type="hidden" name="userId" value={Cookies.get('userId')} id='userId' />
+                            <button type="submit" name="addToCart" className="cartButton">Add to cart </button>   
+                        </form>
+                    
                     </div>
                 </div>
             </div>    

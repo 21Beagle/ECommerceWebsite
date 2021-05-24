@@ -12,6 +12,7 @@ import Home from "./components/Home/Home"
 import Header from "./components/Header/Header"
 import Products from "./components/Products/Products"
 import ProductPage from './components/ProductPage/ProductPage'
+import Cart from './components/Cart/Cart'
 
 
 import "./App.css"
@@ -36,10 +37,10 @@ export default function App(props) {
           <Route path="/product/:id">
             <ProductPage  />
           </Route>
-          <Route path="/">
-            <Home  />
+          <Route path="/cart">
+            <Cart  />
           </Route>
-          <Route path="/logout">
+          <Route path="/">
             <Home  />
           </Route>
         </Switch>

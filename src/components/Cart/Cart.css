@@ -1,0 +1,14 @@
+.title {
+    width: 100%;
+}
+
+.cartListContainer {
+    width: 60%;
+    height: auto;
+    padding: 10px;
+}
+
+.total {
+    width: 100%;
+    text-align: right;
+}

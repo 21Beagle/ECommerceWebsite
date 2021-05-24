@@ -11,6 +11,7 @@ function Header() {
     const handleChange = () =>{
         Cookies.remove('loggedOn')
         Cookies.remove('user')
+        Cookies.remove('userId')
         setUserLoggedOn(false)
     }
     
