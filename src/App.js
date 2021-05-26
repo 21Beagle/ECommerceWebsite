@@ -13,6 +13,8 @@ import Header from "./components/Header/Header"
 import Products from "./components/Products/Products"
 import ProductPage from './components/ProductPage/ProductPage'
 import Cart from './components/Cart/Cart'
+import Orders from './components/Orders/Orders'
+import OrderPage from './components/OrderPage/OrderPage'
 
 
 import "./App.css"
@@ -39,6 +41,12 @@ export default function App(props) {
           </Route>
           <Route path="/cart">
             <Cart  />
+          </Route>
+          <Route path="/orders">
+            <Orders />
+          </Route>
+          <Route path="/order/:id">
+            <OrderPage  />
           </Route>
           <Route path="/">
             <Home  />

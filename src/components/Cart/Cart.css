@@ -12,3 +12,11 @@
     width: 100%;
     text-align: right;
 }
+
+.cartComplete {
+    font-size: 1.2em;
+    width: auto;
+    background-color: var(--prim2);
+    border: var(--prim1) 1px solid;
+}
+

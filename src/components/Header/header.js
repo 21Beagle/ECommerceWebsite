@@ -16,11 +16,21 @@ function Header() {
     }
     
 
-    var button;
+    var signInLogOut;
     if (!userLoggedOn) {
-      button = <Link to="/signup">Sign Up</Link>;
+        signInLogOut = <Link to="/signup">Sign Up</Link>;
     } else {
-      button = <Link to="/logout" onClick={handleChange}>Log Off</Link>;
+        signInLogOut = <Link to="/logout" onClick={handleChange}>Log Off</Link>;
+    }
+
+    var orders;
+    if (!userLoggedOn) {
+        orders = null
+    } else {
+        orders =
+        <li className="listItems">
+            <Link to="/orders">Your orders</Link>
+        </li>
     }
 
     return (
@@ -35,8 +45,9 @@ function Header() {
                 <li className="listItems">
                     <Link to="/cart">Cart</Link>
                 </li>
+                {orders}
                 <li className="listItems">
-                    {button}
+                    {signInLogOut}
                 </li>
             </ul>
         </div>

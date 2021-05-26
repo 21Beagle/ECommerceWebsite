@@ -87,6 +87,7 @@ app.all('/login', async (req,res) => {
     const userEmail = req.body.email
     var userId = await findUserIdByEmail(userEmail)
     userId = userId.id
+    var cartId = await findCartIdByUserId(userId)
     hashedPassword = await getUserHashedPassword(userEmail)
     bcrypt.compare(req.body.password, hashedPassword, function(err, isMatch) {
         if (err) {
@@ -101,6 +102,7 @@ app.all('/login', async (req,res) => {
           res.cookie("user", userEmail);
           res.cookie('userId', userId)
           res.cookie("loggedOn", true)
+          res.cookie('cartId', cartId)
           res.redirect("/products")
         }
       })
@@ -193,17 +195,61 @@ app.post('/cart/:id/remove', async (req, res) => {
 
 })
 
+app.post('/orders/complete/:cartId', async (req, res) => {
+  try {
+    const cartId = req.params.cartId
+    const userId = req.body.userId
+    const total = req.body.total
+    console.log("user:", userId, "checked out an order with total:", total)
+    createOrder(userId, status = 0, total)
+    var products = await getCartItems(cartId)
+    products.map(async  (products, index)=>{addToOrderItem(products.name, products.description, products.product_id, await getOrderIdByUserId(userId), products.price)})
+    removeAllFromCart(cartId)
+    res.redirect('/cart')
+  } catch (e) {
+    console.log(e)
+  }
+})
+
+
+
 
 app.listen(SERVERPORT, ()=> {
     console.log(`The server has started on port ${SERVERPORT}`)
 })
 
+const createOrder = async (userId, status, total)=> {
+  try{
+  await client.query(`INSERT INTO public.orders (user_id, status, total)
+  VALUES (${userId}, '${status}', ${total});`)
+} catch (e) {
+  console.log(e)
+}
+}
+
+const getOrderIdByUserId = async (userId) => {
+  try {
+    results = await client.query(
+      `SELECT id FROM public.orders 
+      WHERE user_id = ${userId}
+      ORDER BY id DESC`
+    )
+    return results.rows[0].id
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 
 const createUser = async (userEmail, hashedPassword) => {
+  try{
     await client.query(` 
-            INSERT INTO public.users (email, password)
-            VALUES ('{${userEmail}}', '{${hashedPassword}}');`)
+    INSERT INTO public.users (email, password)
+    VALUES ('{${userEmail}}', '{${hashedPassword}}');`)
+  } catch (e) {
+    console.log(e)
+  }
+   
 
 }
 
@@ -217,10 +263,28 @@ const addToCart = async (productName, productDescription, userId, cartId, produc
   }
 }
 
+const addToOrderItem = async (productName, productDescription, productId, orderId, price) => {
+  try{ 
+   await client.query(` 
+   INSERT INTO public.order_items (name, description, item_id, order_id, price)
+   VALUES ('${productName}', '${productDescription}', ${productId}, ${orderId}, ${price});`) 
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
 const removeFromCart = async(userId, productId, cartId) => {
   await client.query(`
   DELETE FROM public.cart_items
 	WHERE user_id = ${userId} AND product_id = ${productId} AND cart_id = ${cartId};
+  `)
+}
+
+const removeAllFromCart = async(cartId) => {
+  await client.query(`
+  DELETE FROM public.cart_items
+	WHERE cart_id = ${cartId};
   `)
 }
 
@@ -302,6 +366,7 @@ const getCartItems = async (cartId) => {
   try{
     return results.rows
   } catch (e) {
+    console.log(e)
     return null
   }
   
