@@ -1,6 +1,9 @@
 
 # ECommerceWebiste
 
+An ecommerce website created using react.js, node.js, and postgreSQL. Users may login, add products to cart, checkout an order, and check the order after they have checked out.
+
+
 ## Setup
 
 To run this project locally you will first need to install PostgreSQL and node.js. 
