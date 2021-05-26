@@ -1,7 +1,7 @@
 
 # ECommerceWebiste
 
-##Setup
+## Setup
 
 To run this project locally you will first need to install PostgreSQL and node.js. 
 
