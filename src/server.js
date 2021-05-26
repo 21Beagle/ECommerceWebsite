@@ -211,12 +211,61 @@ app.post('/orders/complete/:cartId', async (req, res) => {
   }
 })
 
+app.get('/orders/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId
+    orders = await getUserOrders(userId)
+    res.send(orders)
+  } catch (e) {
+    console.log(e)
+  }
+})
 
+
+app.get('/order/:userId/:orderId',  async (req, res) => {
+  try{
+   console.log(req.params)
+  const orderId = req.params.orderId
+  const products = await getOrderByOrderId(orderId)
+  console.log(products)
+  res.send(products) 
+  } catch (e) {
+    console.log(e)
+    res.redirect('/orders')
+  }
+  
+})
 
 
 app.listen(SERVERPORT, ()=> {
     console.log(`The server has started on port ${SERVERPORT}`)
 })
+
+const getOrderByOrderId = async (orderId) => {
+  try {
+    results = await client.query(
+      `SELECT * FROM public.order_items
+      WHERE order_id = ${orderId}
+      ORDER BY id ASC;`
+    )
+    return results.rows
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const getUserOrders = async (userId) => {
+  try {
+    results = await client.query(
+      `SELECT * FROM public.orders
+      WHERE user_id = ${userId}
+      ORDER BY id ASC;`
+    )
+    return results.rows
+  } catch (e) {
+
+  }
+}
 
 const createOrder = async (userId, status, total)=> {
   try{
